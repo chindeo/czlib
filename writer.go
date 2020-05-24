@@ -73,6 +73,7 @@ func NewWriterLevelBuffer(w io.Writer, level, bufferSize int) (*Writer, error) {
 }
 
 
+
 // NewWriterLevel let the user provide a compression level value
 func NewWriterLevel2(w io.Writer, level,method, windowBits, memLevel, strategy int,) (*Writer, error) {
 	return NewWriterLevelBuffer2(w, level, DEFAULT_COMPRESSED_BUFFER_SIZE,method, windowBits, memLevel, strategy)
@@ -86,6 +87,7 @@ func NewWriterLevelBuffer2(w io.Writer, level, bufferSize,method, windowBits, me
 	}
 	return z, nil
 }
+
 
 // this is the main function: it advances the write with either
 // new data or something else to do, like a flush

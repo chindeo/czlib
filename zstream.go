@@ -8,6 +8,7 @@ package czlib
 // See http://www.zlib.net/zlib_how.html for more information on this
 
 /*
+
 #cgo CFLAGS: -Werror=implicit
 #cgo pkg-config: zlib
 
@@ -30,6 +31,7 @@ int zstream_deflate_init(char *strm, int level) {
   ((z_stream*)strm)->opaque = Z_NULL;
   return deflateInit((z_stream*)strm, level);
 }
+
 
 
 // deflateInit2 is a macro, so using a wrapper function
@@ -78,7 +80,6 @@ void zstream_deflate_end(char *strm) {
   deflateEnd((z_stream*)strm);
 }
 
-
 */
 import "C"
 
@@ -113,6 +114,7 @@ func (strm *zstream) deflateInit(level int) error {
 	return nil
 }
 
+
 func (strm *zstream) deflateInit2(level,method, windowBits, memLevel, strategy int) error {
 	result := C.zstream_deflate_init_2(&strm[0], C.int(level),C.int(method), C.int(windowBits), C.int(memLevel), C.int(strategy))
 	if result != Z_OK {
@@ -120,6 +122,7 @@ func (strm *zstream) deflateInit2(level,method, windowBits, memLevel, strategy i
 	}
 	return nil
 }
+
 
 func (strm *zstream) inflateEnd() {
 	C.zstream_inflate_end(&strm[0])

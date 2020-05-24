@@ -19,11 +19,13 @@ import (
 )
 
 func main() {
+
 	//url := "https://github.com/madler/zlib/archive/v1.2.11.tar.gz"
 	//version := "cbbd203"
 
 	url := "https://gitlab.com/sortix/libz/-/archive/v1.2.11/libz-v1.2.11.tar.gz"
 	version := "852e2b05"
+
 
 	if files, err := tarball(url); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: download tarball %#v: %v\n", url, err)
