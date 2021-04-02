@@ -129,7 +129,7 @@ func UnsafeCompress(input []byte) (UnsafeByte, error) {
 func Gzip(body []byte) ([]byte, error) {
 	outb := make([]byte, 0, 16*1024)
 	out := bytes.NewBuffer(outb)
-	writer, err := czlib.NewWriterLevel2(out, -1, 8, -9, 8, 0)
+	writer, err := NewWriterLevel2(out, -1, 8, -9, 8, 0)
 	if err != nil {
 		return []byte{}, err
 	}
@@ -149,7 +149,7 @@ func Gzip(body []byte) ([]byte, error) {
 
 // 使用参考 https://github.com/madler/zlib/blob/master/examples/zran.c
 func Gunzip(body []byte) ([]byte, error) {
-	reader, err := czlib.NewReaderLevel2(bytes.NewBuffer(body), -15)
+	reader, err := NewReaderLevel2(bytes.NewBuffer(body), -15)
 	if err != nil {
 		return []byte{}, err
 	}
