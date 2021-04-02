@@ -37,6 +37,16 @@ func NewReaderBuffer(r io.Reader, bufferSize int) (io.ReadCloser, error) {
 	return z, nil
 }
 
+// NewReaderBuffer has the same behavior as NewReader but the user can provides
+// a custom buffer size.
+func NewReaderLevel2(r io.Reader, level int) (io.ReadCloser, error) {
+	z := &reader{r: r, in: make([]byte, DEFAULT_COMPRESSED_BUFFER_SIZE)}
+	if err := z.strm.inflateInit2(level); err != nil {
+		return nil, err
+	}
+	return z, nil
+}
+
 func (z *reader) Read(p []byte) (int, error) {
 	if z.err != nil {
 		return 0, z.err

@@ -24,6 +24,16 @@ int zstream_inflate_init(char *strm) {
   return inflateInit((z_stream*)strm);
 }
 
+// inflateInit2 is a macro, so using a wrapper function
+int zstream_inflate_init_2(char *strm, int level) {
+  ((z_stream*)strm)->zalloc = Z_NULL;
+  ((z_stream*)strm)->zfree = Z_NULL;
+  ((z_stream*)strm)->opaque = Z_NULL;
+  ((z_stream*)strm)->avail_in = 0;
+  ((z_stream*)strm)->next_in = Z_NULL;
+  return inflateInit2((z_stream*)strm, level);
+}
+
 // deflateInit is a macro, so using a wrapper function
 int zstream_deflate_init(char *strm, int level) {
   ((z_stream*)strm)->zalloc = Z_NULL;
@@ -106,6 +116,14 @@ func (strm *zstream) inflateInit() error {
 	return nil
 }
 
+func (strm *zstream) inflateInit2(level int) error {
+	result := C.zstream_inflate_init_2(&strm[0], C.int(level))
+	if result != Z_OK {
+		return fmt.Errorf("cgzip: failed to initialize inflate (%v): %v", result, strm.msg())
+	}
+	return nil
+}
+
 func (strm *zstream) deflateInit(level int) error {
 	result := C.zstream_deflate_init(&strm[0], C.int(level))
 	if result != Z_OK {
@@ -114,15 +132,13 @@ func (strm *zstream) deflateInit(level int) error {
 	return nil
 }
 
-
-func (strm *zstream) deflateInit2(level,method, windowBits, memLevel, strategy int) error {
-	result := C.zstream_deflate_init_2(&strm[0], C.int(level),C.int(method), C.int(windowBits), C.int(memLevel), C.int(strategy))
+func (strm *zstream) deflateInit2(level, method, windowBits, memLevel, strategy int) error {
+	result := C.zstream_deflate_init_2(&strm[0], C.int(level), C.int(method), C.int(windowBits), C.int(memLevel), C.int(strategy))
 	if result != Z_OK {
 		return fmt.Errorf("cgzip: failed to initialize deflate (%v): %v", result, strm.msg())
 	}
 	return nil
 }
-
 
 func (strm *zstream) inflateEnd() {
 	C.zstream_inflate_end(&strm[0])

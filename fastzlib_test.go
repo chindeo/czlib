@@ -44,7 +44,7 @@ func genData(n int) ([]byte, error) {
 
 func TestAllZlib(t *testing.T) {
 	type compressFunc func([]byte) ([]byte, error)
-	funcs := []compressFunc{Compress, gzip, zzip}
+	funcs := []compressFunc{Compress, Gzip, zzip}
 	names := []string{"Compress", "gzip", "zzip"}
 	for _, i := range []int{10, 128, 1000, 1024 * 10, 1024 * 100, 1024 * 1024, 1024 * 1024 * 7} {
 		data, err := genData(i)
@@ -131,7 +131,7 @@ func BenchmarkCompressStream(b *testing.B) {
 	}
 	b.SetBytes(int64(len(raw)))
 	for i := 0; i < b.N; i++ {
-		gzip(raw)
+		Gzip(raw)
 	}
 }
 
@@ -174,7 +174,7 @@ func BenchmarkDecompressStream(b *testing.B) {
 	}
 	b.SetBytes(int64(len(raw)))
 	for i := 0; i < b.N; i++ {
-		gunzip(gzipped)
+		Gunzip(gzipped)
 	}
 }
 
@@ -190,7 +190,7 @@ func BenchmarkDecompressStdZlib(b *testing.B) {
 
 // helpers
 
-func gunzip(body []byte) ([]byte, error) {
+func Gunzip(body []byte) ([]byte, error) {
 	reader, err := NewReader(bytes.NewBuffer(body))
 	if err != nil {
 		return []byte{}, err
@@ -207,7 +207,7 @@ func zunzip(body []byte) ([]byte, error) {
 	return ioutil.ReadAll(reader)
 }
 
-func gzip(body []byte) ([]byte, error) {
+func Gzip(body []byte) ([]byte, error) {
 	outb := make([]byte, 0, 16*1024)
 	out := bytes.NewBuffer(outb)
 	writer := NewWriter(out)
