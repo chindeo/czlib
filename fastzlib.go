@@ -124,7 +124,7 @@ func UnsafeCompress(input []byte) (UnsafeByte, error) {
 	return b, nil
 }
 
-// 相关文档 http://www.zlib.net/manual.html#Basic
+// Gzip 相关文档 http://www.zlib.net/manual.html#Basic
 
 func Gzip(body []byte) ([]byte, error) {
 	outb := make([]byte, 0, 16*1024)
@@ -147,7 +147,7 @@ func Gzip(body []byte) ([]byte, error) {
 	return out.Bytes(), nil
 }
 
-// 使用参考 https://github.com/madler/zlib/blob/master/examples/zran.c
+// Gunzip 使用参考 https://github.com/madler/zlib/blob/master/examples/zran.c
 func Gunzip(body []byte) ([]byte, error) {
 	reader, err := NewReaderLevel2(bytes.NewBuffer(body), -15)
 	if err != nil {
