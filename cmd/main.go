@@ -3,11 +3,11 @@ package main
 import "github.com/snowlyg/czlib"
 
 func main() {
-	gzip, err := czlib.Gzip([]byte("fdsfsdfdsf"))
+	gzip, err := czlib.GzipLevel2([]byte("fdsfsdfdsf"))
 	if err != nil {
 		panic(err)
 	}
-	gunzip, err := czlib.Gunzip(gzip)
+	gunzip, err := czlib.GunzipLevel2(gzip, -15)
 	if err != nil {
 		panic(err)
 	}
