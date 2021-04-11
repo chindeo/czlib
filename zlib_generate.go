@@ -20,11 +20,11 @@ import (
 
 func main() {
 
-	//url := "https://github.com/madler/zlib/archive/v1.2.11.tar.gz"
-	//version := "cbbd203"
+	url := "https://github.com/madler/zlib/archive/v1.2.11.tar.gz"
+	version := "cbbd203"
 
-	url := "https://gitlab.com/sortix/libz/-/archive/v1.2.11/libz-v1.2.11.tar.gz"
-	version := "852e2b05"
+	// url := "https://gitlab.com/sortix/libz/-/archive/v1.2.11/libz-v1.2.11.tar.gz"
+	// version := "852e2b05"
 
 	if files, err := tarball(url); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: download tarball %#v: %v\n", url, err)
@@ -82,7 +82,7 @@ func hzlib(files map[string][]byte, version string) (io.Reader, error) {
 	), nil
 }
 
-// libzlib 处理文件，替换相关文件内容，生成文件
+// libzlib 处理文件 zlib.c，替换相关文件内容，生成文件
 func libzlib(files map[string][]byte, version string) (io.Reader, error) {
 	dfiles := map[string][]byte{}
 	for fn, b := range files {
