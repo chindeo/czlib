@@ -26,7 +26,6 @@ func main() {
 	url := "https://gitlab.com/sortix/libz/-/archive/v1.2.11/libz-v1.2.11.tar.gz"
 	version := "852e2b05"
 
-
 	if files, err := tarball(url); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: download tarball %#v: %v\n", url, err)
 		os.Exit(1)
@@ -63,6 +62,8 @@ func main() {
 		return
 	}
 }
+
+// hzlib 生成 zlib.h
 func hzlib(files map[string][]byte, version string) (io.Reader, error) {
 	marisaH, err := resolve(files, []string{
 		"zlib.h",
@@ -81,6 +82,7 @@ func hzlib(files map[string][]byte, version string) (io.Reader, error) {
 	), nil
 }
 
+// libzlib 处理文件，替换相关文件内容，生成文件
 func libzlib(files map[string][]byte, version string) (io.Reader, error) {
 	dfiles := map[string][]byte{}
 	for fn, b := range files {
@@ -158,6 +160,7 @@ func libzlib(files map[string][]byte, version string) (io.Reader, error) {
 	), nil
 }
 
+// tarball 获取文件，解压文件内容
 func tarball(url string) (map[string][]byte, error) {
 	fmt.Printf("Downloading tarball from %s\n", url)
 
@@ -214,6 +217,7 @@ func tarball(url string) (map[string][]byte, error) {
 	return files, nil
 }
 
+// resolve 解析文件
 func resolve(files map[string][]byte, filenames []string, includePath ...string) (resolvedFile []byte, err error) {
 	fmt.Printf("Resolving C* source files %s (against:%s) (I = included, S = preserved because not found, R = skipped because already included)\n", filenames, includePath)
 

@@ -1,6 +1,6 @@
 package main
 
-import "github.com/snowlyg/czlib"
+import "github.com/chindeo/czlib"
 
 func main() {
 	gzip, err := czlib.GzipLevel2([]byte("fdsfsdfdsf"))
