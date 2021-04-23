@@ -20,10 +20,13 @@ import (
 
 func main() {
 
-	url := "https://github.com/madler/zlib/archive/v1.2.11.tar.gz"
-	version := "cbbd203"
+	// url := "https://github.com/madler/zlib/archive/v1.2.11.tar.gz"
+	// version := "cacf7f1"
 
-	// url := "https://gitlab.com/sortix/libz/-/archive/v1.2.11/libz-v1.2.11.tar.gz"
+	url := "https://gitlab.com/sortix/libz/-/archive/v1.2.11/libz-v1.2.11.tar.gz"
+	version := "cacf7f1d"
+
+	// url := "https://gitlab.com/sortix/libz/-/archive/852e2b05851bfa471eb627ae16bf7b1d5e0a5a78/libz-852e2b05851bfa471eb627ae16bf7b1d5e0a5a78.tar.gz"
 	// version := "852e2b05"
 
 	if files, err := tarball(url); err != nil {
