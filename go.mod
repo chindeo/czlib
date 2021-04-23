@@ -1,3 +1,3 @@
-module github.com/chindeo/czlib
+module github.com/snowlyg/czlib
 
 go 1.13
