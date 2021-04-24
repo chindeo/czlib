@@ -1,5 +1,5 @@
 // AUTOMATICALLY GENERATED, DO NOT EDIT!
-// merged from sortix libz 752c1630.
+// merged from sortix libz 852e2b05.
 /* zlib.h -- interface of the libz general purpose compression library
   version 1.2.8, August 12th, 2014
 
