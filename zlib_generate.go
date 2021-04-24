@@ -60,11 +60,31 @@ func main() {
 			return mf.Close()
 		}
 	}(); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: generate marisa.h: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error: generate zlib.h: %v\n", err)
 		os.Exit(1)
 		return
 	}
 }
+
+func hzutil(files map[string][]byte, version string) (io.Reader, error) {
+	marisaH, err := resolve(files, []string{
+		"zutil.h",
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Printf("Generating zutil.h\n")
+	return io.MultiReader(
+		// A custom header.
+		strings.NewReader("// AUTOMATICALLY GENERATED, DO NOT EDIT!\n"),
+		strings.NewReader("// merged from sortix libz "+version+".\n"),
+		// Include the header.
+		bytes.NewReader(marisaH),
+	), nil
+}
+
+
 func hzlib(files map[string][]byte, version string) (io.Reader, error) {
 	marisaH, err := resolve(files, []string{
 		"zlib.h",
