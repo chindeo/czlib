@@ -2,7 +2,7 @@ package czlib
 
 //go:generate go run -tags zlib_generate zlib_generate.go
 
-// #cgo CPPFLAGS:
+// #cgo CPPFLAGS: -w
 // #cgo LDFLAGS:
 import "C"
 import (
